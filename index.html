@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Catálogo interactivo de libros">
+  <title>Catálogo de Libros | Biblioteca FITEC</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="js/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div>
+        <p class="eyebrow">BIBLIOTECA FITEC</p>
+        <h1>Catálogo de libros</h1>
+        <p class="subtitle">Acervo bibliográfico interactivo</p>
+      </div>
+      <button id="btnAbrirModal" class="btn btn-primary" type="button">+ Nuevo libro</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="filters-bar" aria-label="Filtros del catálogo">
+      <div class="filter-group grow">
+        <label for="busqueda">Buscar</label>
+        <input type="search" id="busqueda" placeholder="Título, autor o ISBN..." autocomplete="off">
+      </div>
+      <div class="filter-group">
+        <label for="filtroCategoria">Categoría</label>
+        <select id="filtroCategoria"><option value="Todas">Todas</option></select>
+      </div>
+      <div class="filter-group">
+        <label for="filtroDisponible">Estado</label>
+        <select id="filtroDisponible">
+          <option value="">Todos</option>
+          <option value="1">Disponibles</option>
+          <option value="0">Prestados</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label for="filtroOrden">Ordenar</label>
+        <select id="filtroOrden">
+          <option value="recientes">Más recientes</option>
+          <option value="anio_desc">Año descendente</option>
+          <option value="titulo_asc">Título A-Z</option>
+        </select>
+      </div>
+    </section>
+    <div class="status-bar">
+      <span id="contadorResultados">Cargando catálogo...</span>
+      <button id="btnExportar" class="btn btn-secondary btn-sm" type="button">Exportar CSV</button>
+    </div>
+    <section id="catalogoGrid" class="books-grid" aria-live="polite"></section>
+  </main>
+
+  <div id="modalLibro" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modalLibroTitulo">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="modalLibroTitulo">Registrar nuevo libro</h2>
+        <button class="btn-close" type="button" data-close="modalLibro" aria-label="Cerrar">&times;</button>
+      </div>
+      <form id="formLibro">
+        <div class="form-grid">
+          <label>Título *<input type="text" name="titulo" maxlength="180" required></label>
+          <label>Autor *<input type="text" name="autor" maxlength="120" required></label>
+          <label>Categoría *<input type="text" name="categoria" maxlength="60" required></label>
+          <label>Año *<input type="number" name="anio_publicacion" min="1500" max="2100" required></label>
+          <label>ISBN *<input type="text" name="isbn" maxlength="20" required></label>
+          <label>Editorial *<input type="text" name="editorial" maxlength="100" required></label>
+          <label>Páginas<input type="number" name="paginas" min="1" max="10000" value="200"></label>
+        </div>
+        <label class="full-width">Sinopsis *<textarea name="sinopsis" rows="4" required></textarea></label>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" data-close="modalLibro">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Guardar libro</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="modalDetalle" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="detalleTitulo">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="detalleTitulo"></h2>
+        <button class="btn-close" type="button" data-close="modalDetalle" aria-label="Cerrar">&times;</button>
+      </div>
+      <p id="detalleMeta" class="detail-meta"></p>
+      <p id="detalleSinopsis" class="detail-sinopsis"></p>
+    </div>
+  </div>
+  <div id="notificacion" class="notification" role="status" aria-live="polite"></div>
+  <script src="js/app.js"></script>
+</body>
+</html>
